@@ -11,6 +11,7 @@ export default function Home() {
   const activeTab = useCart((state: any) => state.activeTab) as string;
   const [checkoutData, setCheckoutData] = useState({ name: '', email: '', idFile: null });
   const [paymentStatus, setPaymentStatus] = useState('idle'); // idle, processing, success
+  const [expandedInsurance, setExpandedInsurance] = useState(false);
 
   const handleSimulatePayment = (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,6 +30,8 @@ export default function Home() {
       <Head>
         <title>FinPlatform - Digital Financial Freedom</title>
         <meta name="description" content="Modern, clean, and fast digital financial services." />
+        <link rel="icon" href="/favicon1.svg" type="image/svg+xml" />
+        <link rel="shortcut icon" href="/favicon1.svg" type="image/svg+xml" />
       </Head>
 
       <Navbar />
@@ -121,12 +124,48 @@ export default function Home() {
                       </div>
                     </div>
 
-                    <h3 className="text-2xl font-bold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors">
-                      {product.name}
-                    </h3>
-                    <p className="text-slate-500 mb-8 font-light leading-relaxed min-h-[48px]">
+                    {product.id === '1' ? (
+                      <button
+                        onClick={() => setExpandedInsurance(!expandedInsurance)}
+                        className="text-2xl font-bold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors text-left focus:outline-none"
+                      >
+                        {product.name}
+                      </button>
+                    ) : (
+                      <h3 className="text-2xl font-bold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors">
+                        {product.name}
+                      </h3>
+                    )}
+                    <p className={`text-slate-500 ${product.id === '1' && expandedInsurance ? 'mb-4' : 'mb-8'} font-light leading-relaxed min-h-[48px]`}>
                       {product.description}
                     </p>
+
+                    {product.id === '1' && expandedInsurance && (
+                      <div className="mb-6 p-5 bg-blue-50 border border-blue-100 rounded-2xl text-blue-900 animate-fade-in-up">
+                        <p className="text-sm mb-4 leading-relaxed font-medium">
+                          Traveling exposes you to unforeseen risks, from sudden medical emergencies to costly flight cancellations that can ruin your budget. This insurance is an absolute necessity to ensure you are fully financially protected—do not travel without it. Secure your peace of mind and buy it now.
+                        </p>
+                        <button
+                          onClick={() => isProductInCart(product.id) ? removeFromCart(product.id) : addToCart(product)}
+                          className={`w-full py-2.5 rounded-xl font-medium transition-all flex items-center justify-center space-x-2 ${isProductInCart(product.id)
+                            ? 'bg-emerald-100 text-emerald-700 hover:bg-emerald-200'
+                            : 'bg-blue-600 text-white hover:bg-blue-700 shadow-md shadow-blue-200'
+                            }`}
+                        >
+                          {isProductInCart(product.id) ? (
+                            <>
+                              <Check size={18} />
+                              <span>Added</span>
+                            </>
+                          ) : (
+                            <>
+                              <Plus size={18} />
+                              <span>Add to Cart</span>
+                            </>
+                          )}
+                        </button>
+                      </div>
+                    )}
 
                     <button
                       onClick={() => isProductInCart(product.id) ? removeFromCart(product.id) : addToCart(product)}
