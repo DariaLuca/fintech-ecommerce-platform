@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Head from 'next/head';
 import Navbar from '../components/Navbar';
 import LoanCalculator from '../components/LoanCalculator';
+import InvestmentVisualizer from '../components/InvestmentVisualizer';
 import { products } from '../utils/products';
 import { useCart } from '../store/useCart';
 import { ShieldCheck, Plus, Check, FileUp, CreditCard, ArrowRight, ShoppingCart } from 'lucide-react';
@@ -12,6 +13,7 @@ export default function Home() {
   const [checkoutData, setCheckoutData] = useState({ name: '', email: '', idFile: null });
   const [paymentStatus, setPaymentStatus] = useState('idle'); // idle, processing, success
   const [expandedInsurance, setExpandedInsurance] = useState(false);
+  const [expandedInvestment, setExpandedInvestment] = useState(false);
 
   const handleSimulatePayment = (e: React.FormEvent) => {
     e.preventDefault();
@@ -113,7 +115,9 @@ export default function Home() {
                 {filteredProducts.map((product) => (
                   <div
                     key={product.id}
-                    className="group bg-white border border-slate-100 rounded-3xl p-8 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 relative overflow-hidden"
+                    className={`group bg-white border border-slate-100 rounded-3xl p-8 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 relative overflow-hidden ${
+                      product.id === '4' && expandedInvestment ? 'md:col-span-2 lg:col-span-3' : ''
+                    }`}
                   >
                     <div className="flex justify-between items-start mb-6">
                       <span className="text-xs font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-3 py-1 rounded-full">
@@ -124,9 +128,12 @@ export default function Home() {
                       </div>
                     </div>
 
-                    {product.id === '1' ? (
+                    {product.id === '1' || product.id === '4' ? (
                       <button
-                        onClick={() => setExpandedInsurance(!expandedInsurance)}
+                        onClick={() => {
+                          if (product.id === '1') setExpandedInsurance(!expandedInsurance);
+                          if (product.id === '4') setExpandedInvestment(!expandedInvestment);
+                        }}
                         className="text-2xl font-bold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors text-left focus:outline-none"
                       >
                         {product.name}
@@ -164,6 +171,12 @@ export default function Home() {
                             </>
                           )}
                         </button>
+                      </div>
+                    )}
+
+                    {product.id === '4' && expandedInvestment && (
+                      <div className="mb-8 w-full animate-fade-in-up">
+                        <InvestmentVisualizer />
                       </div>
                     )}
 

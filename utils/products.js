@@ -22,10 +22,10 @@ export const products = [
     },
     {
         id: '4',
-        name: 'Crypto Invest Kit',
+        name: 'Starter Investment Portfolio',
         category: 'Investments',
         price: 200,
-        description: 'A starter kit for secure crypto trading and portfolio tracking.',
+        description: 'A starter kit for secure investments and portfolio tracking.',
     },
     {
         id: '5',
