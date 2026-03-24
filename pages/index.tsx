@@ -12,7 +12,7 @@ export default function Home() {
   const activeTab = useCart((state: any) => state.activeTab) as string;
   const [checkoutData, setCheckoutData] = useState({ name: '', email: '', idFile: null });
   const [paymentStatus, setPaymentStatus] = useState('idle'); // idle, processing, success
-  const [expandedInsurance, setExpandedInsurance] = useState(false);
+  const [expandedInsurance, setExpandedInsurance] = useState<string | null>(null);
   const [expandedInvestment, setExpandedInvestment] = useState(false);
 
   const handleSimulatePayment = (e: React.FormEvent) => {
@@ -28,7 +28,7 @@ export default function Home() {
   const filteredProducts = products.filter(p => p.category === activeTab);
 
   return (
-    <div className="min-h-screen bg-[#FDFDFD] font-sans text-slate-900 selection:bg-blue-100 selection:text-blue-900">
+    <div className="min-h-screen bg-background font-sans text-foreground selection:bg-blue-100 selection:text-blue-900">
       <Head>
         <title>FinPlatform - Digital Financial Freedom</title>
         <meta name="description" content="Modern, clean, and fast digital financial services." />
@@ -52,7 +52,7 @@ export default function Home() {
                 <span>Welcome to the future of banking</span>
               </div>
 
-              <h1 className="text-5xl lg:text-7xl font-extrabold tracking-tight text-slate-900 mb-6 leading-tight max-w-4xl">
+              <h1 className="text-5xl lg:text-7xl font-extrabold tracking-tight text-heading mb-6 leading-tight max-w-4xl">
                 Digital Financial Freedom, <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Reimagined.</span>
               </h1>
 
@@ -61,11 +61,11 @@ export default function Home() {
               </p>
 
               <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-                <button className="bg-slate-900 hover:bg-slate-800 text-white px-8 py-4 rounded-full font-medium text-lg transition-all shadow-lg shadow-slate-200 flex items-center justify-center group">
+                <button className="bg-foreground hover:bg-heading text-background px-8 py-4 rounded-full font-medium text-lg transition-all shadow-lg flex items-center justify-center group">
                   Explore Products
                   <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </button>
-                <button className="bg-white hover:bg-slate-50 text-slate-900 border border-slate-200 px-8 py-4 rounded-full font-medium text-lg transition-all flex items-center justify-center">
+                <button className="bg-card-bg hover:bg-card-border text-foreground border border-card-border px-8 py-4 rounded-full font-medium text-lg transition-all flex items-center justify-center">
                   Personalize Loan
                 </button>
               </div>
@@ -115,7 +115,7 @@ export default function Home() {
                 {filteredProducts.map((product) => (
                   <div
                     key={product.id}
-                    className={`group bg-white border border-slate-100 rounded-3xl p-8 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 relative overflow-hidden ${
+                    className={`group bg-card-bg border border-card-border rounded-3xl p-8 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 relative overflow-hidden ${
                       product.id === '4' && expandedInvestment ? 'md:col-span-2 lg:col-span-3' : ''
                     }`}
                   >
@@ -128,29 +128,55 @@ export default function Home() {
                       </div>
                     </div>
 
-                    {product.id === '1' || product.id === '4' ? (
+                    {product.id === '1' || product.id === '9' || product.id === '4' ? (
                       <button
                         onClick={() => {
-                          if (product.id === '1') setExpandedInsurance(!expandedInsurance);
+                          if (product.id === '1' || product.id === '9') setExpandedInsurance(expandedInsurance === product.id ? null : product.id);
                           if (product.id === '4') setExpandedInvestment(!expandedInvestment);
                         }}
-                        className="text-2xl font-bold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors text-left focus:outline-none"
+                        className="text-2xl font-bold text-heading mb-3 group-hover:text-blue-600 transition-colors text-left focus:outline-none"
                       >
                         {product.name}
                       </button>
                     ) : (
-                      <h3 className="text-2xl font-bold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors">
+                      <h3 className="text-2xl font-bold text-heading mb-3 group-hover:text-blue-600 transition-colors">
                         {product.name}
                       </h3>
                     )}
-                    <p className={`text-slate-500 ${product.id === '1' && expandedInsurance ? 'mb-4' : 'mb-8'} font-light leading-relaxed min-h-[48px]`}>
+                    <p className={`text-slate-500 ${(product.id === '1' || product.id === '9') && expandedInsurance === product.id ? 'mb-4' : 'mb-8'} font-light leading-relaxed min-h-[48px]`}>
                       {product.description}
                     </p>
 
-                    {product.id === '1' && expandedInsurance && (
+                    {product.id === '1' && expandedInsurance === '1' && (
                       <div className="mb-6 p-5 bg-blue-50 border border-blue-100 rounded-2xl text-blue-900 animate-fade-in-up">
                         <p className="text-sm mb-4 leading-relaxed font-medium">
                           Traveling exposes you to unforeseen risks, from sudden medical emergencies to costly flight cancellations that can ruin your budget. This insurance is an absolute necessity to ensure you are fully financially protected—do not travel without it. Secure your peace of mind and buy it now.
+                        </p>
+                        <button
+                          onClick={() => isProductInCart(product.id) ? removeFromCart(product.id) : addToCart(product)}
+                          className={`w-full py-2.5 rounded-xl font-medium transition-all flex items-center justify-center space-x-2 ${isProductInCart(product.id)
+                            ? 'bg-emerald-100 text-emerald-700 hover:bg-emerald-200'
+                            : 'bg-blue-600 text-white hover:bg-blue-700 shadow-md shadow-blue-200'
+                            }`}
+                        >
+                          {isProductInCart(product.id) ? (
+                            <>
+                              <Check size={18} />
+                              <span>Added</span>
+                            </>
+                          ) : (
+                            <>
+                              <Plus size={18} />
+                              <span>Add to Cart</span>
+                            </>
+                          )}
+                        </button>
+                      </div>
+                    )}
+                    {product.id === '9' && expandedInsurance === '9' && (
+                      <div className="mb-6 p-5 bg-blue-50 border border-blue-100 rounded-2xl text-blue-900 animate-fade-in-up">
+                        <p className="text-sm mb-4 leading-relaxed font-medium">
+                          Your home is more than just four walls; it’s where your life happens. But a single pipe burst or a storm shouldn't be allowed to wash away your hard-earned dreams. HomeGuard Elite acts as an invisible shield, covering everything from structural damage to your favorite tech. Don't leave your sanctuary vulnerable—secure your legacy today.
                         </p>
                         <button
                           onClick={() => isProductInCart(product.id) ? removeFromCart(product.id) : addToCart(product)}
@@ -184,7 +210,7 @@ export default function Home() {
                       onClick={() => isProductInCart(product.id) ? removeFromCart(product.id) : addToCart(product)}
                       className={`w-full py-3.5 rounded-xl font-medium transition-all flex items-center justify-center space-x-2 ${isProductInCart(product.id)
                         ? 'bg-emerald-50 text-emerald-600 border border-emerald-200 hover:bg-emerald-100'
-                        : 'bg-slate-900 text-white hover:bg-slate-800'
+                        : 'bg-foreground text-background hover:bg-heading'
                         }`}
                     >
                       {isProductInCart(product.id) ? (
@@ -208,17 +234,17 @@ export default function Home() {
 
         {/* CHECKOUT & PAYMENT SIMULATOR */}
         {activeTab === 'cart' && (
-          <section id="checkout" className="py-24 bg-white border-t border-slate-100">
+          <section id="checkout" className="py-24 bg-background border-t border-card-border">
             <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="text-center mb-12">
                 <h2 className="text-3xl font-bold tracking-tight mb-4">Fast Checkout & eKYC</h2>
                 <p className="text-slate-500 text-lg">Complete your purchase securely.</p>
               </div>
 
-              <div className="bg-white rounded-3xl p-8 shadow-[0_4px_40px_rgb(0,0,0,0.06)] border border-slate-50 mb-8">
+              <div className="bg-card-bg rounded-3xl p-8 shadow-[0_4px_40px_rgb(0,0,0,0.06)] border border-card-border mb-8">
                 {cartItems.length === 0 ? (
                   <div className="text-center py-12">
-                    <div className="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-4 text-slate-400">
+                    <div className="w-16 h-16 bg-card-border rounded-full flex items-center justify-center mx-auto mb-4 text-slate-400">
                       <ShoppingCart size={24} />
                     </div>
                     <h3 className="text-lg font-medium text-slate-900">Your cart is empty</h3>

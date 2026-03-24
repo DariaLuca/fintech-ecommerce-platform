@@ -1,22 +1,81 @@
 @import "tailwindcss";
 
-:root {
+:root, [data-theme="light"] {
   --background: #ffffff;
   --foreground: #171717;
+  --heading: #0f172a;
+  --card-bg: #ffffff;
+  --card-border: #f1f5f9;
+  --inv-bg: #f8fafc;
+  --inv-panel: rgba(255, 255, 255, 0.6);
+  --inv-sentence: rgba(241, 245, 249, 0.9);
+  --grad-start: #34d399;
+  --grad-end: #60a5fa;
+}
+
+[data-theme="dark"] {
+  --background: #0f172a;
+  --foreground: #cbd5e1;
+  --heading: #f8fafc;
+  --card-bg: #1e293b;
+  --card-border: #334155;
+  --inv-bg: #0f172a;
+  --inv-panel: rgba(30, 41, 59, 0.6);
+  --inv-sentence: rgba(15, 23, 42, 0.9);
+  --grad-start: #34d399;
+  --grad-end: #60a5fa;
+}
+
+[data-theme="pastel"] {
+  --background: #fdf6e3;
+  --foreground: #657b83;
+  --heading: #586e75;
+  --card-bg: #faf3df;
+  --card-border: #eee8d5;
+  --inv-bg: #ffebf0;
+  --inv-panel: rgba(253, 246, 227, 0.6);
+  --inv-sentence: rgba(250, 243, 223, 0.9);
+  --grad-start: #f472b6;
+  --grad-end: #c084fc;
+  --color-blue-50: #fff0f5; 
+  --color-blue-100: #ffe4e1;
+  --color-blue-200: #ffb3c6;
+  --color-blue-400: #ff8fa3;
+  --color-blue-500: #ffb6c1;
+  --color-blue-600: #ff9eaa; /* powder pink */
+  --color-blue-700: #e07a8a;
+  --color-blue-900: #a93c4e;
+}
+
+[data-theme="cappuccino"] {
+  --background: #f3ece4;
+  --foreground: #5a4b41;
+  --heading: #3a2e26;
+  --card-bg: #ebe3da;
+  --card-border: #dacfc2;
+  --inv-bg: #eaddcf;
+  --inv-panel: rgba(243, 236, 228, 0.6);
+  --inv-sentence: rgba(235, 227, 218, 0.9);
+  --grad-start: #d97706;
+  --grad-end: #8b5a2b;
+  --color-blue-50: #f5ece5;
+  --color-blue-100: #ebd8c8;
+  --color-blue-200: #dcbfa5;
+  --color-blue-400: #b4855d;
+  --color-blue-500: #9e6d42;
+  --color-blue-600: #8b5a2b; /* brown */
+  --color-blue-700: #6b4423;
+  --color-blue-900: #422610;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-card-bg: var(--card-bg);
+  --color-card-border: var(--card-border);
+  --color-heading: var(--heading);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {

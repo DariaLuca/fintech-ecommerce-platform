@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { ShoppingCart, Menu, X, Landmark } from 'lucide-react';
 import { useCart } from '../store/useCart';
+import ThemeSwitcher from './ThemeSwitcher';
 
 const categories = [
     'Insurance',
@@ -21,12 +22,12 @@ export default function Navbar() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     return (
-        <nav className="sticky top-0 z-50 bg-white border-b border-gray-100 shadow-sm">
+        <nav className="sticky top-0 z-50 bg-background border-b border-card-border shadow-sm">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between h-20 items-center">
                     {/* Logo */}
                     <div className="flex items-center space-x-2 cursor-pointer" onClick={() => setActiveTab('home')}>
-                        <span className="flex items-center space-x-2 text-2xl font-bold tracking-tight text-slate-900 group">
+                        <span className="flex items-center space-x-2 text-2xl font-bold tracking-tight text-heading group">
                             <span className="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center group-hover:bg-blue-700 transition-colors">
                                 <Landmark size={24} />
                             </span>
@@ -51,10 +52,12 @@ export default function Navbar() {
                     </div>
 
                     {/* Right Actions */}
-                    <div className="flex items-center space-x-6">
+                    <div className="flex items-center space-x-4 lg:space-x-6">
+                        <ThemeSwitcher />
+
                         <button
                             onClick={() => setActiveTab('cart')}
-                            className="relative p-2 text-gray-600 hover:text-blue-600 transition-colors rounded-full hover:bg-gray-50"
+                            className="relative p-2 text-foreground hover:text-blue-600 transition-colors rounded-full hover:bg-card-bg"
                         >
                             <ShoppingCart size={24} />
                             {cartItems.length > 0 && (

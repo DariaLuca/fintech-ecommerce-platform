@@ -7,6 +7,13 @@ export const products = [
         description: 'Travel insurance covering medical and cancellation costs in Europe.',
     },
     {
+        id: '9',
+        name: 'SmartHome Protect',
+        category: 'Insurance',
+        price: 120,
+        description: 'Full-coverage home insurance: fire, flooding, and natural disasters.',
+    },
+    {
         id: '2',
         name: 'Flash Loan 10,000',
         category: 'Loans',
