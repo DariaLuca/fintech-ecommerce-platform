@@ -198,18 +198,18 @@ export default function Home() {
               </p>
 
               <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-                <button className="bg-foreground hover:bg-heading text-background px-8 py-4 rounded-full font-medium text-lg transition-all shadow-lg flex items-center justify-center group">
-                  Explore Products
-                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </button>
-                <button className="bg-card-bg hover:bg-card-border text-foreground border border-card-border px-8 py-4 rounded-full font-medium text-lg transition-all flex items-center justify-center">
+                <button 
+                  onClick={() => document.getElementById('loan-calculator')?.scrollIntoView({ behavior: 'smooth' })}
+                  className="bg-foreground hover:bg-heading text-background px-8 py-4 rounded-full font-medium text-lg transition-all shadow-lg flex items-center justify-center group"
+                >
                   Personalize Loan
+                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </button>
               </div>
             </section>
 
             {/* LOAN CALCULATOR SECTION */}
-            <section className="bg-slate-50 border-y border-slate-100 py-24">
+            <section id="loan-calculator" className="bg-slate-50 border-y border-slate-100 py-24">
               <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center gap-16">
                 <div className="flex-1 lg:pr-12">
                   <h2 className="text-3xl font-bold mb-6">Need extra liquidity? Calculate in seconds.</h2>
