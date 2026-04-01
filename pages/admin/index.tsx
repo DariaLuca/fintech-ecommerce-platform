@@ -24,6 +24,27 @@ export default function AdminDashboard() {
     }
   }, []);
 
+  useEffect(() => {
+    if (!isAuthorized) return;
+
+    // Listen to real-time products & orders updates
+    const inventorySubscription = supabase
+      .channel('table-admin-changes')
+      .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'products' }, (payload) => {
+        setProducts(currentProducts => 
+          currentProducts.map(p => p.id === payload.new.id ? { ...p, stock: payload.new.stock } : p)
+        );
+      })
+      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'orders' }, (payload) => {
+        setOrders(currentOrders => [payload.new, ...currentOrders]);
+      })
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(inventorySubscription);
+    };
+  }, [isAuthorized]);
+
   const fetchData = async () => {
     setLoading(true);
     // Fetch orders

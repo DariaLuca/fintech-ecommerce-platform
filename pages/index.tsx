@@ -5,7 +5,7 @@ import LoanCalculator from '../components/LoanCalculator';
 import InvestmentVisualizer from '../components/InvestmentVisualizer';
 import { supabase } from '../utils/supabase';
 import { useCart } from '../store/useCart';
-import { ShieldCheck, Plus, Check, FileUp, CreditCard, ArrowRight, ShoppingCart, X } from 'lucide-react';
+import { ArrowRight, FileUp, CheckCircle, Smartphone, Plus, ShieldCheck, X, ShoppingCart, PieChart } from 'lucide-react';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements, PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
 
@@ -340,6 +340,59 @@ export default function Home() {
                   </div>
                 ) : (
                   <div className="space-y-8">
+                    {/* Cart Insights Widget */}
+                    <div className="bg-slate-50 border border-slate-200 rounded-2xl p-6 mb-8 shadow-sm">
+                      <div className="flex items-center space-x-3 mb-4">
+                        <PieChart className="w-5 h-5 text-blue-500" />
+                        <h3 className="text-lg font-bold text-slate-900">Portfolio Composition</h3>
+                      </div>
+                      
+                      {(() => {
+                        const categories = cartItems.reduce((acc: any, item: any) => {
+                          acc[item.category] = (acc[item.category] || 0) + item.price;
+                          return acc;
+                        }, {});
+                        
+                        const colors: any = {
+                          Investments: 'bg-emerald-500',
+                          Insurance: 'bg-blue-600',
+                          Business: 'bg-amber-500',
+                          Loans: 'bg-violet-500',
+                          Calculators: 'bg-pink-500',
+                        };
+                        
+                        return (
+                          <div>
+                            <div className="flex w-full h-3 rounded-full overflow-hidden mb-4 bg-slate-200 shadow-inner">
+                              {Object.entries(categories).map(([cat, val]: [string, any]) => (
+                                <div 
+                                  key={cat} 
+                                  style={{ width: `${(val / cartTotal) * 100}%` }} 
+                                  className={`${colors[cat] || 'bg-slate-400'} h-full transition-all duration-700 ease-out`} 
+                                  title={`${cat}: ${Math.round((val / cartTotal) * 100)}%`}
+                                />
+                              ))}
+                            </div>
+                            
+                            <div className="flex flex-wrap gap-4 text-sm font-medium mb-4">
+                              {Object.entries(categories).map(([cat, val]: [string, any]) => (
+                                <div key={cat} className="flex items-center space-x-2">
+                                  <div className={`w-3 h-3 rounded-full ${colors[cat] || 'bg-slate-400'}`} />
+                                  <span className="text-slate-700">{cat} <span className="text-slate-400 ml-1">({Math.round((val / cartTotal) * 100)}%)</span></span>
+                                </div>
+                              ))}
+                            </div>
+
+                            <div className="text-sm font-medium text-slate-600 bg-white p-4 rounded-xl border border-slate-100 italic">
+                              {cartItems.length >= 3 && Object.keys(categories).length > 1 
+                                ? "💡 Great strategy! You're building a highly diversified setup. Balancing different financial pillars is the key to minimizing risk." 
+                                : "💡 Smart tip: The strongest profiles blend tools. Combining insurance protection with growth investments creates a lasting safety net."}
+                            </div>
+                          </div>
+                        );
+                      })()}
+                    </div>
+
                     {/* Cart Summary */}
                     <div>
                       <h3 className="text-lg font-bold border-b border-slate-100 pb-4 mb-4">Order Summary</h3>
