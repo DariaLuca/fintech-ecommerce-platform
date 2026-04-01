@@ -151,6 +151,17 @@ export default function Home() {
     }
   };
 
+  const getCategoryDescription = (tab: string) => {
+    switch (tab.toLowerCase()) {
+      case 'insurance': return "Secure your future and protect what matters most with our custom coverage plans.";
+      case 'investments': return "Build your perfect portfolio in just a few clicks with intelligent asset allocation.";
+      case 'loans': return "Access flexible capital instantly to fund your next big milestone or bridge the gap.";
+      case 'business': return "Empower your enterprise with scaling tools, payment infrastructure, and tailored B2B protections.";
+      case 'calculators': return "Make data-driven financial decisions using our advanced predictive modeling tools.";
+      default: return "Discover the right financial products tailored just for you.";
+    }
+  };
+
   const expandedProductObj = expandedInsurance ? products.find(p => p.id === expandedInsurance) : null;
 
   return (
@@ -229,7 +240,7 @@ export default function Home() {
               <h2 className="text-3xl lg:text-4xl font-bold tracking-tight mb-4">
                 {activeTab}
               </h2>
-              <p className="text-slate-500 text-lg">Build your perfect portfolio in just a few clicks.</p>
+              <p className="text-slate-500 text-lg">{getCategoryDescription(activeTab)}</p>
             </div>
 
             {loadingProducts ? (

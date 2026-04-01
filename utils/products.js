@@ -71,7 +71,7 @@ export const products = [
     },
     {
         id: '15',
-        name: 'The "Inflation Shield" Portfolio',
+        name: 'Inflation Shield Portfolio',
         category: 'Investments',
         price: 200,
         description: 'Focus: Protecting purchasing power. Best for conservative users worried about rising prices.',
@@ -85,7 +85,7 @@ export const products = [
     },
     {
         id: '17',
-        name: 'The "Recession-Proof" Defensive Portfolio',
+        name: 'Recession-Proof Defensive Portfolio',
         category: 'Investments',
         price: 200,
         description: 'Focus: Security and Low Volatility. Best for cautious investors during market crashes.',

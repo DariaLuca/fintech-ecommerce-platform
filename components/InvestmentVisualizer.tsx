@@ -10,7 +10,7 @@ const PORTFOLIO_DATA: Record<string, any> = {
       { name: 'Tech Stocks', percent: 40, color: '#3B82F6', twColor: 'bg-blue-600', shadow: 'shadow-[0_0_12px_rgba(59,130,246,0.3)]' },
       { name: 'Bonds', percent: 30, color: '#8B5CF6', twColor: 'bg-violet-500', shadow: 'shadow-[0_0_12px_rgba(139,92,246,0.6)]' },
       { name: 'Gold ETFs', percent: 20, color: '#F59E0B', twColor: 'bg-amber-500', shadow: 'shadow-[0_0_12px_rgba(245,158,11,0.6)]' },
-      { name: 'Crypto', percent: 10, color: '#10B981', twColor: 'bg-emerald-500', shadow: 'shadow-[0_0_12px_rgba(16,185,129,0.6)]', sub: '(6% Bitcoin, 4% Ethereum)' },
+      { name: 'Commodities', percent: 10, color: '#10B981', twColor: 'bg-emerald-500', shadow: 'shadow-[0_0_12px_rgba(16,185,129,0.6)]', sub: '(6% gold, 4% silver)' },
     ]
   },
   '14': {
